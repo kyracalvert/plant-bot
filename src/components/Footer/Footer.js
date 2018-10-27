@@ -8,7 +8,7 @@ import './Footer.css'
 
 const Footer = () => (
   <footer>
-    &copy; Kara Burnett, Kyra Crawford, Mara Pederson, Ngoc Trinh, Mai Chee Vang 2018
+    &copy; Developers: Kara Burnett, Kyra Crawford, Mara Pederson, Ngoc Trinh, Mai Chee Vang 2018
   </footer>
 );
 

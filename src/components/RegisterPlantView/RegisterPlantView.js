@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import axios from 'axios';
-// action imports
+import Button from '@material-ui/core/Button';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -79,7 +79,7 @@ class RegisterPlantView extends Component {
                     <h2>Tell Us About Your Plant!</h2>
                     <h4>What's your plant's name, type, and how much sun does it need?</h4>
                     <br />
-                    <form onSubmit={this.sendPlantToDatabase} >
+                    <form style={{height: '350px'}} classname="plant-form" onSubmit={this.sendPlantToDatabase} >
                         <label htmlFor="profPhoto">Add a picture of your plant</label>
                         <br />
                         <ReactFilestack
@@ -107,7 +107,7 @@ class RegisterPlantView extends Component {
                         <br />
                         <textarea name="careNotes" onChange={this.handleChange}></textarea>
                         <br />
-                        <button type="submit"> Add plant </button>
+                        <Button variant="contained" color="primary" type="submit"> Add plant </Button>
                     </form>
 
                 </div>

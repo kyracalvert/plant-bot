@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { Pie, Line } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
 // this could also be written with destructuring parameters as:
@@ -84,9 +83,7 @@ class DashView extends Component {
           <Paper>
             <h3>Light Right Now</h3>
             {light>=10 ? <img className="weatherIcon" src={require("./day.svg")}/>:<img className="weatherIcon" src={require("./cloudy.svg")}/>}
-
           </Paper>
-          <LogOutButton className="log-in" />
         </div>
       )
       return (
