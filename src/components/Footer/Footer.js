@@ -8,7 +8,7 @@ import './Footer.css'
 
 const Footer = () => (
   <footer>
-    &copy; Prime Digital Academy
+    &copy; Kara Burnett, Kyra Crawford, Mara Pederson, Ngoc Trinh, Mai Chee Vang 2018
   </footer>
 );
 
