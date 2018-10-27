@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import ReactFilestack from 'filestack-react';
 import axios from 'axios';
 // action imports
-import { USER_ACTIONS } from '../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
     user: state.user,
@@ -53,7 +52,6 @@ class RegisterPlantView extends Component {
 
     }
     componentDidMount() {
-        this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
     }
 
     // componentDidUpdate runs after props and state have changed.
