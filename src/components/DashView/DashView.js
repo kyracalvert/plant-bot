@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Pie, Line } from 'react-chartjs-2';
 import Paper from '@material-ui/core/Paper';
+import axios from 'axios';
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
 // and then instead of `props.user.username` you could use `user.username`
@@ -23,10 +24,41 @@ class DashView extends Component {
     }
   }
   //GET request for the plant that belongs to the user
+  getPlantFacts = () => {
+    axios({
+      method: 'GET',
+      url: '/api/dash/plantFacts',
+    }).then((response)=>{
+      console.log(response.data);
+      this.setState({
+        plantName: response.data[0].plant_name,
+        plantPhoto: response.data[0].plant_photo,
+        totalSunNeeds: response.data[0].light_exposure,
+      })
+    }).catch((error)=>{
+      console.log('Error getting plant facts', error);
+    })
+  }
+
+  //GET request for most recent light data
+  getCurrentLight= () => {
+    axios({
+      method: 'GET',
+      url: '/api/dash',
+    }).then((response)=>{
+      console.log(response.data);
+      this.setState({
+        lightRightNow: response.data[0].light_amount,
+      })
+    }).catch((error)=> {
+      console.log('Error getting current light amout');
+    })
+  }
 
   //GET request for the last week of light data from the database
 
   componentDidMount() {
+    this.getPlantFacts();
   }
 
   // componentDidUpdate runs after props and state have changed.
@@ -38,7 +70,7 @@ class DashView extends Component {
   }
   render() {
     let content = null;
-    let userPlant = this.plantName;
+    const userPlant = this.plantName;
     const dataHere = this.state.completedSun;
     const light = this.state.lightRightNow;
     const data = {
@@ -49,25 +81,30 @@ class DashView extends Component {
       datasets: [{
         data: [(this.state.totalSunNeeds - this.state.completedSun), this.state.completedSun],
         backgroundColor: [
-          '#ffab91',
-          '#b2dfdb'
+          '#e0e0eb',
+          '#FFE77B',
         ],
         hoverBackgroundColor: [
-          '#ffab91',
-          '#b2dfdb'
+          '#e0e0eb',
+          '#FFE77B',
         ]
       }]
     };
     if (this.props.user.username) {
       content = (
-        <div>
+        <div style={{textAlign: 'center'}}>
           <h1 id="welcome">
             Welcome, {this.props.user.username}!
           </h1>
-          <Paper style={{display:'inline-flex',}}><img style={{ height: 200}} src={this.state.plantPhoto}/></Paper>
-          <h4>Here's how {userPlant ? `${this.plantName} is doing:` : 'your plant is doing'}</h4>
-          <br />
-          <Paper style={{width: '500px', height: '300px'}}>{dataHere && < Pie
+          <h4>Here's how {this.state.plantName ? `${this.state.plantName} is doing:` : 'your plant is doing'}</h4>
+          <Paper style={{display:'inline-block', padding: '10px', paddingTop:'7vh', paddingBottom: '5vh', margin:'2vw', width: '23vw'}}><img style={{ height: 335}} src={this.state.plantPhoto}/></Paper>
+          <Paper style={{display: 'inline-block', textAlign: 'center', margin:'2vw', width: '22vw'}}>
+            <h3 style={{textAlign: 'center'}}>Light Right Now</h3>
+            {light>=10 ? <img className="weatherIcon" style={{width: '300px', height: '300px'}} src={require("./day.svg")}/>:<img className="weatherIcon" style={{width: '300px', height: '300px'}} src={require("./cloudy.svg")}/>}
+            <h4>{this.state.lightRightNow} lumens</h4>
+          </Paper>
+          <br/>
+          <Paper style={{width: '50vw',  margin:'8px', textAlign: 'center', display: 'inline-block'}}>{dataHere && < Pie
             options={{
               title: {
                 display: true,
@@ -77,13 +114,9 @@ class DashView extends Component {
             }}
             data={data}
             />}
-            <h5>{userPlant ? userPlant : 'Your plant'} has received {this.state.completedSun} hours of sun today</h5>
+            <h5>{this.state.plantName ? this.state.plantName : 'Your plant'} has received {this.state.completedSun} hours of sun today</h5>
           </Paper>
           <br/>
-          <Paper>
-            <h3>Light Right Now</h3>
-            {light>=10 ? <img className="weatherIcon" src={require("./day.svg")}/>:<img className="weatherIcon" src={require("./cloudy.svg")}/>}
-          </Paper>
         </div>
       )
       return (
