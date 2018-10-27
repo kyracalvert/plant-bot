@@ -6,16 +6,14 @@ CREATE TABLE person (
     password VARCHAR (1000) NOT NULL
 );
 
-CREATE TABLE "plant" (
-	"id" serial NOT NULL,
-	"owner_id" integer NOT NULL,
-	"plant_name" varchar NOT NULL,
-	"plant_photo" varchar NOT NULL,
-	"light_exposure" integer NOT NULL,
-	"care_instructions" varchar NOT NULL,
-	CONSTRAINT plant_pk PRIMARY KEY ("id")
-) WITH (
-  OIDS=FALSE
+CREATE TABLE plant (
+    id SERIAL PRIMARY KEY,
+    owner_id integer NOT NULL,
+    plant_name character varying NOT NULL,
+    plant_photo character varying NOT NULL,
+    light_exposure integer NOT NULL,
+    care_instructions character varying,
+    plant_type character varying
 );
 
 
