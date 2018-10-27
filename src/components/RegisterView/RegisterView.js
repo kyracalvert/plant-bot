@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
-class RegisterPage extends Component {
+class RegisterView extends Component {
   state = {
     username: '',
     password: '',
@@ -94,5 +94,5 @@ const mapStateToProps = state => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps)(RegisterPage);
+export default connect(mapStateToProps)(RegisterView);
 
