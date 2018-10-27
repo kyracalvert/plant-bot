@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
 });//end mapStateToProps
 
 class PlantDataView extends Component {
-   componentDidMount = () => {
+    componentDidMount = () => {
         this.getPlantData();
     };//end componentDidMount
 
@@ -30,12 +30,12 @@ class PlantDataView extends Component {
         axios({
             method: 'GET',
             url: '/api/plant-data',
-        }).then((response)=> {
+        }).then((response) => {
             this.props.dispatch({
                 payload: response.data,
                 type: 'DISPLAY_LIGHT_DATA',
             });
-        }).catch((error)=> {
+        }).catch((error) => {
             console.log('Error GETTING plant data from the database: ', error)
         });// end error handling
     };//end getPlantData
@@ -44,22 +44,25 @@ class PlantDataView extends Component {
         return (
             <Paper>
                 <Table>
-                    <TableHead style={{backgroundColor: '#F5F5F5'}}>
+                    <TableHead style={{ backgroundColor: '#F5F5F5' }}>
                         <TableRow>
-                            <TableCell style={{color: 'black', size: '20px'}}>Date</TableCell>
-                            <TableCell style={{color: 'black', size: '20px'}}>Time</TableCell>
-                            <TableCell style={{color: 'black', size: '20px'}}>Light Amount</TableCell>
+                            <TableCell style={{ color: 'black', size: '20px' }}>Date</TableCell>
+                            <TableCell style={{ color: 'black', size: '20px' }}>Time</TableCell>
+                            <TableCell style={{ color: 'black', size: '20px' }}>Light Amount</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        
-                                <TableRow>
-                                    <TableCell>Data 1
-                                    </TableCell>
-                                    <TableCell>Data 2</TableCell>
-                                    <TableCell>Data 3</TableCell>
-                                </TableRow>
-                          
+                        {this.props.lightData.map((item, i) => {
+                            return (
+                            <TableRow>
+                                <TableCell>{item.date}</TableCell>
+                                <TableCell>{item.time}</TableCell>
+                                <TableCell>{item.light_amount}</TableCell>
+                            </TableRow>
+                            )
+                        })}
+
+
                     </TableBody>
                 </Table>
             </Paper>
